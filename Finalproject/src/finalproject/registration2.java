@@ -1,0 +1,563 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package finalproject;
+
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Date;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author Administrator
+ */
+public class registration2 extends javax.swing.JFrame
+{
+
+   private static JFrame reg1ref;
+   private static JFrame reg3;
+   private static JFrame reg2;
+   
+    public registration2()
+    {
+        initComponents();
+        reg1ref=null;
+        reg2=this;
+        reg3 = null;
+        
+        
+         BufferedImage img1,img2,img3,img4;
+       
+         
+        try
+        {
+            img1=ImageIO.read(new File("C:\\Users\\Administrator\\Documents\\NetBeansProjects\\Finalproject\\src\\finalproject\\finalimages\\miceman.png"));
+            
+            Image dimg1;
+             dimg1=img1.getScaledInstance(lblman.getWidth(),lblman.getHeight(),Image.SCALE_SMOOTH);
+             ImageIcon imageicon1=new ImageIcon(dimg1);
+             lblman.setIcon(imageicon1);
+             
+               img2=ImageIO.read(new File("C:\\Users\\Administrator\\Documents\\NetBeansProjects\\Finalproject\\src\\finalproject\\finalimages\\rightarrow_png.png"));
+            
+            Image dimg2;
+             dimg2=img2.getScaledInstance(lblnext.getWidth(),lblnext.getHeight(),Image.SCALE_SMOOTH);
+             ImageIcon imageicon2=new ImageIcon(dimg2);
+             lblnext.setIcon(imageicon2);
+             
+             img3=ImageIO.read(new File("C:\\Users\\Administrator\\Documents\\NetBeansProjects\\Finalproject\\src\\finalproject\\finalimages\\closebtn.png"));
+        
+             Image dimg3;
+             dimg3=img3.getScaledInstance(lblclose.getWidth(),lblclose.getHeight(),Image.SCALE_SMOOTH);
+             ImageIcon imageicon3=new ImageIcon(dimg3);
+             lblclose.setIcon(imageicon3);
+             
+           //  C:\Users\Administrator\Documents\NetBeansProjects\Finalproject\src\finalproject\finalimages\left_arrow.png
+             
+             img4=ImageIO.read(new File("C:\\Users\\Administrator\\Documents\\NetBeansProjects\\Finalproject\\src\\finalproject\\finalimages\\left_arrow (2).png"));
+           
+             Image dimg4;
+             dimg4=img4.getScaledInstance(lblback.getWidth(),lblback.getHeight(),Image.SCALE_SMOOTH);
+             ImageIcon imageicon4=new ImageIcon(dimg4);
+             lblback.setIcon(imageicon4);
+       
+        }
+        catch(Exception e)
+        {
+            
+            System.out.println("caught = "+e);
+        }
+        
+        
+        this.setVisible(true);
+    }
+    
+    
+    public static void addDataOFReg2(registration2 ref)
+    {
+        
+         
+        registration reg=(registration)registration.getFrame();
+        registration.addDataOfReg1(reg);
+        
+        
+        try {
+             
+          java.sql.Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/stdinfo","root","Tejas2004@");      
+          
+          int id=1;
+          String str="SELECT stdid FROM studentinfo ORDER BY stdid DESC LIMIT 1";
+                    
+                    Statement st=con.createStatement();
+                    
+                    ResultSet rs;
+                    rs=st.executeQuery(str);
+                    
+                    if(rs.next())
+                    {
+                        id=rs.getInt(1);
+                        
+                    } 
+          
+         String query = "UPDATE studentinfo SET phoneno = ?, dob = ?, localaddress = ?, permanentaddress = ? WHERE stdid ="+id;
+            PreparedStatement pstmt = con.prepareStatement(query);
+            
+                java.util.Date utilDate = ref.datechooser.getDate(); // Get the date from the date chooser
+
+            //          Convert java.util.Date to java.sql.Date
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            pstmt.setString(1,ref.txtphone.getText());
+            pstmt.setDate(2, sqlDate);
+            pstmt.setString(3,ref.txtalocaladdress.getText());
+            pstmt.setString(4,ref.txtapermnentaddress.getText());
+            
+            
+           
+           
+            pstmt.executeUpdate();
+            
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents()
+    {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtphone = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtapermnentaddress = new javax.swing.JTextArea();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtalocaladdress = new javax.swing.JTextArea();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jLabel6 = new javax.swing.JLabel();
+        datechooser = new com.toedter.calendar.JDateChooser();
+        lblman = new javax.swing.JLabel();
+        lblclose = new javax.swing.JLabel();
+        lblnext = new javax.swing.JLabel();
+        lblback = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+
+        jPanel1.setBackground(new java.awt.Color(49, 71, 94));
+        jPanel1.setPreferredSize(new java.awt.Dimension(800, 500));
+
+        jLabel1.setBackground(new java.awt.Color(196, 166, 123));
+        jLabel1.setOpaque(true);
+
+        jLabel2.setFont(new java.awt.Font("Elephant", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(196, 166, 123));
+        jLabel2.setText("Phone No.");
+
+        jLabel3.setFont(new java.awt.Font("Elephant", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(196, 166, 123));
+        jLabel3.setText("Permanent Address");
+
+        txtphone.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtphone.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                txtphoneActionPerformed(evt);
+            }
+        });
+        txtphone.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyTyped(java.awt.event.KeyEvent evt)
+            {
+                txtphoneKeyTyped(evt);
+            }
+        });
+
+        txtapermnentaddress.setColumns(20);
+        txtapermnentaddress.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtapermnentaddress.setRows(5);
+        jScrollPane1.setViewportView(txtapermnentaddress);
+
+        jLabel4.setFont(new java.awt.Font("Elephant", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(196, 166, 123));
+        jLabel4.setText("Local Address");
+
+        txtalocaladdress.setColumns(20);
+        txtalocaladdress.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtalocaladdress.setRows(5);
+        jScrollPane2.setViewportView(txtalocaladdress);
+
+        jCheckBox1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jCheckBox1.setForeground(new java.awt.Color(255, 255, 255));
+        jCheckBox1.setText("click here if permanent address same");
+        jCheckBox1.addItemListener(new java.awt.event.ItemListener()
+        {
+            public void itemStateChanged(java.awt.event.ItemEvent evt)
+            {
+                jCheckBox1ItemStateChanged(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Elephant", 0, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(196, 166, 123));
+        jLabel6.setText("Date  of Birth");
+
+        datechooser.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+
+        lblman.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
+        lblman.setForeground(new java.awt.Color(255, 255, 255));
+        lblman.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblman.setText("MAN");
+
+        lblclose.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblclose.setForeground(new java.awt.Color(255, 255, 255));
+        lblclose.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblclose.setText("close");
+        lblclose.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                lblcloseMouseClicked(evt);
+            }
+        });
+
+        lblnext.setBackground(new java.awt.Color(49, 71, 94));
+        lblnext.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblnext.setForeground(new java.awt.Color(255, 255, 255));
+        lblnext.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblnext.setText("Next");
+        lblnext.setOpaque(true);
+        lblnext.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                lblnextMouseClicked(evt);
+            }
+        });
+
+        lblback.setBackground(new java.awt.Color(49, 71, 94));
+        lblback.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblback.setForeground(new java.awt.Color(255, 255, 255));
+        lblback.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblback.setText("Back");
+        lblback.setOpaque(true);
+        lblback.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                lblbackMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(25, Short.MAX_VALUE)
+                .addComponent(lblback, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCheckBox1)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(datechooser, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtphone, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblman, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblclose, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblnext, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblclose, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(lblman, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblnext, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblback, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtphone, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(datechooser, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCheckBox1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(36, 36, 36))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        pack();
+        setLocationRelativeTo(null);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void txtphoneActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_txtphoneActionPerformed
+    {//GEN-HEADEREND:event_txtphoneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtphoneActionPerformed
+
+    private void lblcloseMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_lblcloseMouseClicked
+    {//GEN-HEADEREND:event_lblcloseMouseClicked
+           this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_lblcloseMouseClicked
+
+    private void lblbackMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_lblbackMouseClicked
+    {//GEN-HEADEREND:event_lblbackMouseClicked
+        if(reg1ref==null)
+        {
+         reg1ref=registration.getFrame();      // TODO add your handling code here:
+        }
+        
+        //reg1ref.requestFocusInWindow();
+        reg1ref.requestFocus();
+    }//GEN-LAST:event_lblbackMouseClicked
+
+    private void lblnextMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_lblnextMouseClicked
+    {//GEN-HEADEREND:event_lblnextMouseClicked
+        boolean phonestatus=isMobileValide();
+        boolean empty=isEmptyValidation();
+        
+        System.out.println("empty = "+empty);
+        
+        if(empty)
+        {
+            JOptionPane.showMessageDialog(this,"Fill the all Information !!!","INFO",JOptionPane.INFORMATION_MESSAGE);
+            
+        }
+        else if(phonestatus==false)
+        {
+            
+            JOptionPane.showMessageDialog(this, "Enter corect phone no. '9712xxxxxx' ","Phone",JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if(reg3==null)
+        {
+            reg3=new registration3();        // TODO add your handling code here:
+        }
+        else
+        {
+          
+            reg3.requestFocus();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_lblnextMouseClicked
+
+    private void txtphoneKeyTyped(java.awt.event.KeyEvent evt)//GEN-FIRST:event_txtphoneKeyTyped
+    {//GEN-HEADEREND:event_txtphoneKeyTyped
+            char ch;
+            ch=evt.getKeyChar();
+            
+            if(Character.isDigit(ch)==false)
+            {
+                evt.consume();
+            }        // TODO add your handling code here:
+    }//GEN-LAST:event_txtphoneKeyTyped
+
+    
+    
+    private boolean isEmptyValidation()
+    {
+        boolean status ;
+        
+         Date date=datechooser.getDate();
+        if(date!=null)
+       {
+           status=false;
+       }
+       else
+       {
+           status=true;
+       }
+        status=txtphone.getText().isEmpty();
+        status=txtalocaladdress.getText().isEmpty();
+        status=txtapermnentaddress.getText().isEmpty();
+       
+       return status; 
+    }
+    
+    private boolean isMobileValide()
+    {
+        boolean status ;
+        
+        String number=txtphone.getText();
+        
+        int len=number.length();
+        
+        if(len==10)
+        {   
+            status=true;
+            
+        }
+        else
+        {
+            status=false;
+            
+        }
+        
+        return status;
+        
+    }
+    
+    private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt)//GEN-FIRST:event_jCheckBox1ItemStateChanged
+    {//GEN-HEADEREND:event_jCheckBox1ItemStateChanged
+           String local=txtalocaladdress.getText();
+           
+           int ch=evt.getStateChange();  // 1= is selected ,2 = not selected
+           //System.out.println(" ch = "+ch);
+           
+           if(ch==1)
+           {
+               txtapermnentaddress.setText(local);
+           }
+           else
+           {
+               txtapermnentaddress.setText("");
+           }
+           
+           
+           // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox1ItemStateChanged
+     
+    
+    // Dispose Method 
+//    public void disposeFrame12()
+//    {
+//        reg1ref.dispose();
+//        this.dispose();
+//    }
+//    
+    
+     public static JFrame getFrame()
+    {
+         return reg2;
+    }
+      
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[])
+    {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try
+        {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
+            {
+                if ("Nimbus".equals(info.getName()))
+                {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex)
+        {
+            java.util.logging.Logger.getLogger(registration2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex)
+        {
+            java.util.logging.Logger.getLogger(registration2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex)
+        {
+            java.util.logging.Logger.getLogger(registration2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex)
+        {
+            java.util.logging.Logger.getLogger(registration2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable()
+        {
+            public void run()
+            {
+                new registration2().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.JDateChooser datechooser;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblback;
+    private javax.swing.JLabel lblclose;
+    private javax.swing.JLabel lblman;
+    private javax.swing.JLabel lblnext;
+    private javax.swing.JTextArea txtalocaladdress;
+    private javax.swing.JTextArea txtapermnentaddress;
+    private javax.swing.JTextField txtphone;
+    // End of variables declaration//GEN-END:variables
+}
